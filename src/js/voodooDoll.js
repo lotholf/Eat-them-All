@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 
 // Doll state
-var STANDING = 1;
-var WALKING = 2;
-var SUMMONING = 3;
+var STANDING = 31;
+var WALKING = 32;
+var SUMMONING = 33;
 
 Crafty.c('VoodooDoll', {
 	
@@ -120,24 +120,8 @@ Crafty.c('VoodooDoll', {
 				}
 			}
 		})
-		.onHit("gridBounds", function () {
-			//Move unit out of solid tile
-		})
 		.bind('Moved', function(from) {
 			this.z = this.y;
-			
-			var collide = this.hit('dollGridBounds');
-			
-			// Cancel movement when colliding
-			if (collide) {
-				var collideLength = collide.length;
-				for (var i = 0; i < collideLength; i++) {
-					if (collide[i].type == "SAT") {
-						this.attr({ x: from.x, y: from.y });
-						return;
-					}
-				}
-			}
 			
 			// Cancel movement when summoning signs
 			if (this.state == SUMMONING) {

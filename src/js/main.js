@@ -129,7 +129,7 @@ window.onload = function() {
 				.Cemetery(player1, 1, 3));
 		cemetery.push(Crafty.e("Cemetery, redCemetery")
 				.Cemetery(player1, 1, 7));
-				
+		
 		cemetery.push(Crafty.e("Cemetery, blueCemetery")
 				.Cemetery(player2, 18, 3));
 		cemetery.push(Crafty.e("Cemetery, blueCemetery")

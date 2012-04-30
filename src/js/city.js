@@ -224,7 +224,7 @@ Crafty.c('City', {
 				} else {
 					if (this.player.id == 1) {
 						spriteName = "redZombiePack";
-						xoffset = 25;
+						xoffset = 0;
 						yoffset = -10;
 					} else {
 						spriteName = "blueZombiePack";
