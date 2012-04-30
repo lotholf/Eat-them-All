@@ -123,6 +123,9 @@ Crafty.c('VoodooDoll', {
 		.bind('Moved', function(from) {
 			this.z = this.y;
 			
+			this.x = Math.min(Math.max(ETA.config.scene.border.xmin, this.x), ETA.config.scene.border.xmax);
+			this.y = Math.min(Math.max(ETA.config.scene.border.ymin, this.y), ETA.config.scene.border.ymax);
+			
 			// Cancel movement when summoning signs
 			if (this.state == SUMMONING) {
 				this.attr({ x: from.x, y: from.y });

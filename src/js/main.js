@@ -17,10 +17,10 @@ var SIGN = 4;
 var ZOMBIE = 5;
 
 // Game states
-var INIT = 1;
-var RUNNING = 2;
-var PAUSED = 3;
-var STOPPED = 4;
+var INIT = 51;
+var RUNNING = 52;
+var PAUSED = 53;
+var STOPPED = 54;
 
 //-----------------------------------------------------------------------------
 //	Main

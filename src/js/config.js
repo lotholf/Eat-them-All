@@ -20,6 +20,12 @@ ETA.config = {
 		tile: {
 			width: 50,
 			height: 50
+		},
+		border: {
+			xmin:  90,
+			xmax: 860,
+			ymin: -10,
+			ymax: 520
 		}
 	},
 	
