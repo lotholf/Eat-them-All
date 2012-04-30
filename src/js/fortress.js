@@ -13,8 +13,7 @@ Crafty.c('Fortress', {
 	//-----------------------------------------------------------------------------
 	
 	init: function() {
-		this.requires("2D, DOM, fortress, Collision");
-		this.collision();
+		this.requires("2D, DOM");
 		this._globalZ = 3;
 		return this;
 	},

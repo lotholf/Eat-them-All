@@ -24,7 +24,7 @@ Crafty.c('City', {
 	//-----------------------------------------------------------------------------
 	
 	init: function() {
-		this.requires("2D, DOM, City, SpriteAnimation");
+		this.requires("2D, DOM, SpriteAnimation");
 		return this;
 	},
 	
