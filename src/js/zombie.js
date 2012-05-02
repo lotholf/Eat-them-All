@@ -132,10 +132,10 @@ Crafty.c('Zombie', {
 				}
 			} else {
 				switch (this.walkingDirection) {
-					case NORTH:	yoffset = -10;	break;
-					case SOUTH:	yoffset =  10;	break;
-					case WEST:	xoffset = -20;	break;
-					case EAST:	xoffset =  20;	break;
+					case NORTH:	yoffset = +20;	break;
+					case SOUTH:	yoffset = +20;	break;
+					case WEST:	xoffset = -10;	break;
+					case EAST:	xoffset =   0;	break;
 				}
 			}
 			
@@ -187,11 +187,11 @@ Crafty.c('Zombie', {
 			this.debug = Crafty.e("2D, DOM, Color")
 			   .color("#FF0000")
 			   .attr({
-					x: this.x + 19,
-					y: this.y + 22,
+					x: pseudoCenter.x,//this.x + 19,
+					y: pseudoCenter.y,//this.y + 22,
 					z: this.y + 1,
-					w: 20,
-					h: 20
+					w: 2,
+					h: 2
 				});
 			///DEBUG
 			*/
@@ -208,26 +208,6 @@ Crafty.c('Zombie', {
 				this.currentCell = newCell;
 				changedCell = true;
 			}
-			
-			/*
-			// Correct the zombie trajectory
-			if (this.walkingDirection == WEST || this.walkingDirection == EAST) {
-				var middleOffset = pseudoCenter.y - this.currentCell.center.y;
-				
-				if (middleOffset > 1) {
-					this.move(NORTH, 1);
-				} else if (middleOffset < -1) {
-					this.move(SOUTH, 1);
-				}
-			} else if (this.walkingDirection == NORTH || this.walkingDirection == SOUTH) {
-				var middleOffset = pseudoCenter.x - this.currentCell.center.x;
-				
-				if (middleOffset > 1) {
-					this.move(WEST, 1);
-				} else if (middleOffset < -1) {
-					this.move(EAST, 1);
-				}
-			}*/
 			
 			// Check for signs
 			if (pastMiddle) {

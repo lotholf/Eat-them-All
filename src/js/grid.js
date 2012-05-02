@@ -17,7 +17,7 @@ Crafty.c('BGGrid', {
 		this.cells = [];
 		
 		background = Crafty.e("2D, DOM, bg")
-			.attr({ x:0 , y:0, z:-1 });
+			.attr({ x: 0 , y:0, z: -8000 });
 		
 		return this;
 	},
@@ -56,25 +56,6 @@ Crafty.c('BGGrid', {
 			}
 		}
 		
-		Crafty.e("Line, 2D, DOM, gridBounds, Collision")
-			.attr({ x:0, y:30 , w:2, h:ETA.config.stageHeight })
-			.collision();
-		Crafty.e("Line, 2D, DOM, gridBounds, Collision")
-			.attr({ x:ETA.config.stageWidth-2, y:30 , w:2, h:ETA.config.stageHeight })
-			.collision();
-		Crafty.e("Line, 2D, DOM, dollGridBounds, Collision")
-			.attr({ x:0, y:30 , w:2, h:ETA.config.stageHeight })
-			.collision();
-		Crafty.e("Line, 2D, DOM, dollGridBounds, Collision")
-			.attr({ x:ETA.config.stageWidth-2, y:30 , w:2, h:ETA.config.stageHeight })
-			.collision();
-		Crafty.e("Line, 2D, DOM, dollGridBounds, Collision")
-			.attr({ x:0, y:29 , w:ETA.config.stageWidth, h:2 })
-			.collision();
-		Crafty.e("Line, 2D, DOM, dollGridBounds, Collision")
-			.attr({ x:0, y:ETA.config.stageHeight-2 , w:ETA.config.stageWidth , h:2 })
-			.collision();
-			
 		return this;
 	},
 	
@@ -129,10 +110,10 @@ Crafty.c('BGGrid', {
 		/* Winner */
 		Crafty.e("2D, DOM, Text").attr({ w: 50, h: 20, x: 290, y: 352})
 				.text("-")
-				.css({ "color" : "#FFF", "font-size" : "30px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });		
+				.css({ "color" : "#FFF", "font-size" : "30px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });
 		Crafty.e("2D, DOM, Text").attr({ w: 50, h: 10, x: 290, y: 395})
 				.text("-")
-				.css({ "color" : "#FFF", "font-size" : "19px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });		
+				.css({ "color" : "#FFF", "font-size" : "19px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });
 		Crafty.e("2D, DOM, Text").attr({ w: 50, h: 10, x: 290, y: 418})
 				.text("-")
 				.css({ "color" : "#FFF", "font-size" : "19px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });
@@ -146,10 +127,10 @@ Crafty.c('BGGrid', {
 		/* Looser */
 		Crafty.e("2D, DOM, Text").attr({ w: 50, h: 20, x: 820, y: 352})
 				.text("-")
-				.css({ "color" : "#FFF", "font-size" : "30px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });		
+				.css({ "color" : "#FFF", "font-size" : "30px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });
 		Crafty.e("2D, DOM, Text").attr({ w: 50, h: 10, x: 820, y: 395})
 				.text("-")
-				.css({ "color" : "#FFF", "font-size" : "19px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });		
+				.css({ "color" : "#FFF", "font-size" : "19px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });
 		Crafty.e("2D, DOM, Text").attr({ w: 50, h: 10, x: 820, y: 418})
 				.text("-")
 				.css({ "color" : "#FFF",  "font-size" : "19px", "text-align": "center", "font-weight" : "bold", "font-family" : "Arial, Helvetica, sans-serif" });
