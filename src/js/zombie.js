@@ -304,8 +304,16 @@ Crafty.c('Zombie', {
 						if (otherZombie.player.id != this.player.id) {
 							if (this.state == MOVING && otherZombie.state == MOVING) {
 								if (this.size == otherZombie.size) {
-									this.attack(ZOMBIE);
-									otherZombie.attack(ZOMBIE);
+									var rand = Math.random();
+									
+									if (rand < 0.33) {
+										this.attack(ZOMBIE);
+									} else if (rand < 0.66) {
+										otherZombie.attack(ZOMBIE);
+									} else {
+										this.attack(ZOMBIE);
+										otherZombie.attack(ZOMBIE);
+									}
 								} else {
 									this.setApart();
 									otherZombie.setApart();
