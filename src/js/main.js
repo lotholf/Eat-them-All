@@ -36,6 +36,11 @@ window.onload = function() {
 	//	Loading scene
 	//-----------------------------------------------------------------------------
 
+	// Bind end event to load the score scene
+	Crafty.bind('end', function() {
+		Crafty.scene("score");
+	});
+
 	//the loading screen that will display while our assets load
 	Crafty.scene("loading", function (el) {
 		gameState = "running";
@@ -101,7 +106,6 @@ window.onload = function() {
             supplied: "mp3, oga"
         });
 		//Crafty.audio.play("bgMusic", -1);
-		
 		generateWorld();
 		generatePauseScreen();
 		
@@ -195,7 +199,14 @@ window.onload = function() {
 		Crafty.e("City, neutralCity3")
 				.City(10, 5, 3);
 	});
-	
+	//-----------------------------------------------------------------------------
+	//	Score scene
+	//-----------------------------------------------------------------------------
+
+	Crafty.scene("score", function (e) {
+		gameState = STOPPED;
+		ETA.grid = Crafty.e("BGGrid").gridGameOver();
+	});
 	//-----------------------------------------------------------------------------
 	//	Keyboard handler
 	//-----------------------------------------------------------------------------
@@ -226,9 +237,6 @@ window.onload = function() {
 			}
 		} else if ((el.key == Crafty.keys.SPACE || el.key == Crafty.keys.ENTER) && gameState == STOPPED) {
 			gameState = INIT;
-			Crafty.stop(true);
-			Crafty("2D DOM").destroy();
-			Crafty.init(ETA.config.scene.dimension.width, ETA.config.scene.dimension.height, ETA.config.frameRate);
 			Crafty.scene("loading");
 		}
 	})

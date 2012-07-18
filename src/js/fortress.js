@@ -47,7 +47,7 @@ Crafty.c('Fortress', {
 		this.player.pillar.drawLife();
 		
 		if (this.player.HPLeft <= 0) {
-			this.player.youLose();
+			Crafty.trigger('end');
 		}
 	}
 });
