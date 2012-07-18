@@ -36,8 +36,7 @@ Crafty.c('VoodooDoll', {
 	//-----------------------------------------------------------------------------
 	
 	init : function() {
-		this.requires("2D, DOM, SpriteAnimation, Collision, Controls")
-			.collision(new Crafty.polygon([6,22], [47,22], [47,65], [6,65]));
+		this.requires("2D, DOM, SpriteAnimation, Controls");
 		this._globalZ = 8;
 	},
 	

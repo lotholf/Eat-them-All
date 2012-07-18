@@ -21,6 +21,7 @@ ETA.config = {
 			width: 50,
 			height: 50
 		},
+		// Borders for the doll collisions
 		border: {
 			xmin:  90,
 			xmax: 860,

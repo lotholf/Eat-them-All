@@ -306,9 +306,9 @@ Crafty.c('Zombie', {
 								if (this.size == otherZombie.size) {
 									var rand = Math.random();
 									
-									if (rand < 0.33) {
+									if (rand < 0.2) {
 										this.attack(ZOMBIE);
-									} else if (rand < 0.66) {
+									} else if (rand < 0.4) {
 										otherZombie.attack(ZOMBIE);
 									} else {
 										this.attack(ZOMBIE);

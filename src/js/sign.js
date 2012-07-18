@@ -16,7 +16,7 @@ Crafty.c('Sign', {
 	//-----------------------------------------------------------------------------
 	
 	init: function() {
-		this.requires("2D, DOM, SpriteAnimation, Collision, Controls");
+		this.requires("2D, DOM, SpriteAnimation");
 		this._globalZ = 9;
 	},
 	
