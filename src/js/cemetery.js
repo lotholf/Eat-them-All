@@ -78,6 +78,7 @@ Crafty.c('Cemetery', {
 		this.player.pillar.drawLife();
 		
 		if (this.player.HPLeft <= 0) {
+			idLooser = this.player.id;
 			Crafty.trigger('end');
 		}
 	}

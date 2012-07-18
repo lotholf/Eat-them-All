@@ -62,18 +62,11 @@ Crafty.audio.add("pauseStart", [
         "media/PauseBaron.ogg"]);
 
 //VOLUME BALANCE
-Crafty.audio.settings("signCreate",{volume:0.20});
-Crafty.audio.settings("signMove",{volume:0.30});
-Crafty.audio.settings("signDelete",{volume:0.30});
-Crafty.audio.settings("doorOpen",{volume:0.50});
-Crafty.audio.settings("doorClose",{volume:0.50});
-Crafty.audio.settings("holeDig",{volume:0.50});
-Crafty.audio.settings("zombieDie",{volume:0.50});
-Crafty.audio.settings("zombieSounds",{volume:0.50});
-Crafty.audio.settings("zombieRage",{volume:0.50});
-Crafty.audio.settings("fortressAttack",{volume:1.0});
-Crafty.audio.settings("soldierDie",{volume:1.0});
-Crafty.audio.settings("cityDie",{volume:0.75});
-Crafty.audio.settings("gameOver",{volume:1.0});
-Crafty.audio.settings("pauseStart",{volume:0.5});
+// Set volume in play method
+//Crafty.audio.settings("holeDig",{volume:0.50});
+//Crafty.audio.settings("zombieDie",{volume:0.50});
+//Crafty.audio.settings("zombieSounds",{volume:0.50});
+//Crafty.audio.settings("zombieRage",{volume:0.50});
+//Crafty.audio.settings("fortressAttack",{volume:1.0});
+//Crafty.audio.settings("soldierDie",{volume:1.0});
 // Use Crafty.audio.play(String id, number repeat); to play sounds repeat time (-1 => loop)

@@ -154,9 +154,9 @@ Crafty.c('City', {
 		this.doorsOpen = !this.doorsOpen;
 		
 		if (this.doorsOpen) {
-			Crafty.audio.play("doorOpen");
+			Crafty.audio.play("doorOpen", 1, 0.50);
 		} else {
-			Crafty.audio.play("doorClose");
+			Crafty.audio.play("doorClose", 1, 0.50);
 		}
 	},
 	procreate: function() {
@@ -181,7 +181,7 @@ Crafty.c('City', {
 				
 					if (this.nbHumans == 0) {
 						this.updateSprite();
-						Crafty.audio.play("cityDie");
+						Crafty.audio.play("cityDie", 1, 0.30);
 					}
 				}
 			}

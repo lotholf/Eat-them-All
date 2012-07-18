@@ -22,6 +22,9 @@ var RUNNING = 52;
 var PAUSED = 53;
 var STOPPED = 54;
 
+// Looser
+var idLooser = 1;
+
 //-----------------------------------------------------------------------------
 //	Main
 //-----------------------------------------------------------------------------
@@ -31,6 +34,56 @@ window.onload = function() {
 	mute = false;
 	pauseTimeout = undefined;
 
+	//-----------------------------------------------------------------------------
+	//	Audio stream
+	//-----------------------------------------------------------------------------
+	$("#boucleJplayer").jPlayer( {
+		ready: function () {
+			$(this).jPlayer("setMedia", {
+				m4a: "media/ZombieBattleQN.mp3", 
+				oga: "media/ZombieBattleQN.ogg" 
+			}).jPlayer("play");
+		},
+		ended: function() { 
+			$(this).jPlayer("play");
+		},
+		supplied: "mp3, oga"
+	});
+	
+	$("#pauseJplayer").jPlayer( {
+		ready: function () {
+			$(this).jPlayer("setMedia", {
+				m4a: "media/LaPause.mp3", 
+				oga: "media/LaPause.ogg" 
+			});
+		},
+		ended: function() { 
+			$(this).jPlayer("play");
+		},
+		supplied: "mp3, oga"
+	});
+	$("#boucleJplayer").jPlayer("volume",1);
+	$("#pauseJplayer").jPlayer("volume",1);
+	$("#muter").bind('click', function() {
+		if (!mute){
+			mute = true;
+			
+			$("#boucleJplayer").jPlayer("volume",0);
+			$("#pauseJplayer").jPlayer("volume",0);
+			$("#muter").removeClass("mute");
+			$("#muter").addClass("unmute");
+		}
+		else {
+			mute = false;
+			
+			$("#boucleJplayer").jPlayer("volume",1);
+			$("#pauseJplayer").jPlayer("volume",1);
+			$("#muter").removeClass("unmute");
+			$("#muter").addClass("mute");
+		}
+	});
+		
+		
 	Crafty.init(ETA.config.scene.dimension.width, ETA.config.scene.dimension.height, ETA.config.frameRate);
 		
 	//-----------------------------------------------------------------------------
@@ -44,8 +97,7 @@ window.onload = function() {
 
 	//the loading screen that will display while our assets load
 	Crafty.scene("loading", function (el) {
-		gameState = "running";
-		
+		gameState = INIT;
 		//load takes an array of assets and a callback when complete
 		Crafty.load([
 			"img/sprites/background.png",
@@ -97,80 +149,7 @@ window.onload = function() {
 
 	Crafty.scene("main", function (e) {
 		gameState = RUNNING;
-        $("#boucleJplayer").jPlayer( {
-            ready: function () {
-                $(this).jPlayer("setMedia", {
-                    m4a: "media/ZombieBattleQN.mp3", 
-                    oga: "media/ZombieBattleQN.ogg" 
-                }).jPlayer("play");
-            },
-            ended: function() { 
-                $(this).jPlayer("play");
-            },
-            supplied: "mp3, oga"
-        });
-        
-        $("#pauseJplayer").jPlayer( {
-            ready: function () {
-                $(this).jPlayer("setMedia", {
-                    m4a: "media/LaPause.mp3", 
-                    oga: "media/LaPause.ogg" 
-                });
-            },
-            ended: function() { 
-                $(this).jPlayer("play");
-            },
-            supplied: "mp3, oga"
-        });
-		$("#boucleJplayer").jPlayer("volume",1);
-		$("#pauseJplayer").jPlayer("volume",1);
-		$("#muter").bind('click', function() {
-			if (!mute){
-				mute = true;
-				
-				$("#boucleJplayer").jPlayer("volume",0);
-				$("#pauseJplayer").jPlayer("volume",0);
-				Crafty.audio.settings("signCreate",{volume:0});
-				Crafty.audio.settings("signMove",{volume:0});
-				Crafty.audio.settings("signDelete",{volume:0});
-				Crafty.audio.settings("doorOpen",{volume:0});
-				Crafty.audio.settings("doorClose",{volume:0});
-				Crafty.audio.settings("holeDig",{volume:0});
-				Crafty.audio.settings("zombieDie",{volume:0});
-				Crafty.audio.settings("zombieSounds",{volume:0});
-				Crafty.audio.settings("zombieRage",{volume:0});
-				Crafty.audio.settings("fortressAttack",{volume:0});
-				Crafty.audio.settings("soldierDie",{volume:0});
-				Crafty.audio.settings("cityDie",{volume:0});
-				Crafty.audio.settings("gameOver",{volume:0});
-				Crafty.audio.settings("pauseStart",{volume:0});
-				$("#muter").removeClass("mute");
-				$("#muter").addClass("unmute");
-			}
-			else {
-				mute = false;
-				
-				$("#boucleJplayer").jPlayer("volume",1);
-				$("#pauseJplayer").jPlayer("volume",1);
-				Crafty.audio.settings("signCreate",{volume:0.20});
-				Crafty.audio.settings("signMove",{volume:0.30});
-				Crafty.audio.settings("signDelete",{volume:0.30});
-				Crafty.audio.settings("doorOpen",{volume:0.50});
-				Crafty.audio.settings("doorClose",{volume:0.50});
-				Crafty.audio.settings("holeDig",{volume:0.50});
-				Crafty.audio.settings("zombieDie",{volume:0.50});
-				Crafty.audio.settings("zombieSounds",{volume:0.50});
-				Crafty.audio.settings("zombieRage",{volume:0.50});
-				Crafty.audio.settings("fortressAttack",{volume:1.0});
-				Crafty.audio.settings("soldierDie",{volume:1.0});
-				Crafty.audio.settings("cityDie",{volume:0.75});
-				Crafty.audio.settings("gameOver",{volume:1.0});
-				Crafty.audio.settings("pauseStart",{volume:0.5});
-				$("#muter").removeClass("unmute");
-				$("#muter").addClass("mute");
-			} 
-		})
-		//Crafty.audio.play("bgMusic", -1);
+
 		generateWorld();
 		generatePauseScreen();
 		
@@ -264,13 +243,38 @@ window.onload = function() {
 		Crafty.e("City, neutralCity3")
 				.City(10, 5, 3);
 	});
+
 	//-----------------------------------------------------------------------------
 	//	Score scene
 	//-----------------------------------------------------------------------------
 
 	Crafty.scene("score", function (e) {
 		gameState = STOPPED;
-		ETA.grid = Crafty.e("BGGrid").gridGameOver();
+		ETA.grid = Crafty.e("BGGrid").gridGameOver(idLooser);
+	});
+
+	//-----------------------------------------------------------------------------
+	//	Replay scene
+	//-----------------------------------------------------------------------------
+
+	Crafty.scene("replay", function (e) {
+		gameState = INIT;
+		Crafty.e('HTML')
+			.attr({ w: ETA.config.scene.dimension.width, h: ETA.config.scene.dimension.height, x: 0, y: 0 })
+			.replace(
+				'<div id="menu">'+
+					'<div id="menu-button">'+
+						'<div id="start-button">start</div>'+
+//						'<div id="option-button" class="hideMenu"><img src="img/option.png" alt="OPTION"/></div>'+
+//						'<div id="tutorial-button" class="hideMenu"><img src="img/tuto.png" alt="TUTORIAL"/></div>'+
+					'</div>'+
+				'</div>'
+		);
+
+		$('#start-button').click(function() {
+			Crafty.scene("main"); //when everything is loaded, run the main scene
+		});
+
 	});
 	//-----------------------------------------------------------------------------
 	//	Keyboard handler
@@ -282,14 +286,13 @@ window.onload = function() {
 				gameState = PAUSED;
 				Crafty.pause(true);
 				$("#pause-screen").show();
-				Crafty.audio.settings("pauseStart", { muted: false });
-				Crafty.audio.play("pauseStart");
+				Crafty.audio.play("pauseStart", 1, 0.50);
 				$("#boucleJplayer").jPlayer("pause");
 				pauseTimeout = window.setTimeout(function() {
 					$("#pauseJplayer").jPlayer("play");
 				}, 6000 );
 			} else if (gameState == PAUSED) {
-				Crafty.audio.settings("pauseStart", { muted: true });
+				Crafty.audio.stop("pauseStart");
 				$("#boucleJplayer").jPlayer("play");
                 $("#pauseJplayer").jPlayer("stop");
 				window.clearTimeout(pauseTimeout);
@@ -300,7 +303,7 @@ window.onload = function() {
 			}
 		} else if ((el.key == Crafty.keys.SPACE || el.key == Crafty.keys.ENTER) && gameState == STOPPED) {
 			gameState = INIT;
-			Crafty.scene("loading");
+			Crafty.scene("replay");
 		}
 	})
 	

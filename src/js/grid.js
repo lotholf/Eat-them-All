@@ -63,16 +63,16 @@ Crafty.c('BGGrid', {
 	//	Methods - Game over
 	//-----------------------------------------------------------------------------
 	
-	gridGameOver: function(){
-		Crafty.audio.play("gameOver");
+	gridGameOver: function(idPlayerLooser){
+		Crafty.audio.play("gameOver", 1, 1.0);
 		Crafty.sprite(290, "img/GameOverScreen_VicoryText.png", {
 			endTextSpriteVictory: [0, 0],
 			endTextSpriteDefeat: [1, 0]
 		});
-		Crafty.sprite(291, "img/GameOverScreen_RedVictory.png", {
+		Crafty.sprite(290, "img/GameOverScreen_RedVictory.png", {
 			redSpriteVictory: [0, 0]
 		});
-		Crafty.sprite(291, "img/GameOverScreen_RedDefeat.png", {
+		Crafty.sprite(290, "img/GameOverScreen_RedDefeat.png", {
 			redSpriteDefeat: [0, 0]
 		});
 		Crafty.sprite(289, "img/GameOverScreen_BlueVictory.png", {
@@ -86,17 +86,17 @@ Crafty.c('BGGrid', {
 			statsText: [0, 0]
 		});
 		
-		//if (looser.id == 1) {
-			//Crafty.e("endText, endTextSpriteVictory").attr({ w: 290, h: 120, x: 630, y: 220});
-			//Crafty.e("endText, endTextSpriteDefeat").attr({ w: 290, h: 120, x: 90, y: 220});
-			//Crafty.e("finalTribute, redSpriteDefeat").attr({ w: 290, h: 220, x: 90, y: 0}).finalTribute();
-			//Crafty.e("finalTribute, blueSpriteVictory").attr({ w: 290, h: 220, x: 620, y: 0}).finalTribute();
-		//} else {
-			//Crafty.e("endText, endTextSpriteVictory").attr({ w: 290, h: 120, x: 90, y: 220});
-			//Crafty.e("endText, endTextSpriteDefeat").attr({ w: 290, h: 120, x: 630, y: 220});
-			//Crafty.e("finalTribute, redSpriteVictory").attr({ w: 290, h: 220, x: 90, y: 0}).finalTribute();
-			//Crafty.e("finalTribute, blueSpriteDefeat").attr({ w: 290, h: 220, x: 620, y: 0}).finalTribute();
-		//}
+		if (idPlayerLooser == 1) {
+			Crafty.e("endText, endTextSpriteVictory").attr({ w: 290, h: 120, x: 630, y: 220});
+			Crafty.e("endText, endTextSpriteDefeat").attr({ w: 290, h: 120, x: 90, y: 220});
+			Crafty.e("finalTribute, redSpriteDefeat").attr({ w: 290, h: 220, x: 90, y: 0}).finalTribute();
+			Crafty.e("finalTribute, blueSpriteVictory").attr({ w: 290, h: 220, x: 620, y: 0}).finalTribute();
+		} else {
+			Crafty.e("endText, endTextSpriteVictory").attr({ w: 290, h: 120, x: 90, y: 220});
+			Crafty.e("endText, endTextSpriteDefeat").attr({ w: 290, h: 120, x: 630, y: 220});
+			Crafty.e("finalTribute, redSpriteVictory").attr({ w: 290, h: 220, x: 90, y: 0}).finalTribute();
+			Crafty.e("finalTribute, blueSpriteDefeat").attr({ w: 290, h: 220, x: 620, y: 0}).finalTribute();
+		}
 		
 		Crafty.e("endText, endEAT").attr({ w: 220, h: 230, x: 375, y: 0});
 		Crafty.e("endText, statsText").attr({ w: 285, h: 240, x: 90, y: 335});

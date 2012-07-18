@@ -41,7 +41,7 @@ Crafty.c('Sign', {
 			this.animate("turn_up", [[4,0],[3,0], [2,0], [1,0], [0,0], [11,0]]);
 		}
 		
-		Crafty.audio.play("signCreate");
+		Crafty.audio.play("signCreate", 1, 0.20);
 		this.animate("up", ETA.config.animation.sign.create, 0);
 		this.direction = NORTH;
 		this.mvt = (this.player.id == 1) ? "turn_right" : "turn_left";
@@ -65,22 +65,22 @@ Crafty.c('Sign', {
 	
 	rotateSign: function() {
 		if (!this.isPlaying("turn_right") && this.mvt == "turn_right")  {
-			Crafty.audio.play("signMove");
+			Crafty.audio.play("signMove", 1, 0.30);
 			this.animate("turn_right", ETA.config.animation.sign.rotate);
 			this.direction = EAST;
 			this.mvt = (this.player.id == 1) ? "turn_bottom" : "turn_up";
 		} else if (!this.isPlaying("turn_bottom") && this.mvt == "turn_bottom")  {
-			Crafty.audio.play("signMove");
+			Crafty.audio.play("signMove", 1, 0.30);
 			this.animate("turn_bottom", ETA.config.animation.sign.rotate);
 			this.direction = SOUTH;
 			this.mvt = (this.player.id == 1) ? "turn_left" : "turn_right";
 		} else if (!this.isPlaying("turn_left") && this.mvt == "turn_left")  {
-			Crafty.audio.play("signMove");
+			Crafty.audio.play("signMove", 1, 0.30);
 			this.animate("turn_left", ETA.config.animation.sign.rotate);
 			this.direction = WEST;
 			this.mvt = (this.player.id == 1) ? "turn_up" : "turn_bottom";
 		} else if (!this.isPlaying("turn_up") && this.mvt == "turn_up")  {
-			Crafty.audio.play("signDelete");
+			Crafty.audio.play("signDelete", 1, 0.30);
 			this.direction = NONE;
 			this.mvt = NONE;
 			this.player.popSign--;
