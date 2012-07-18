@@ -174,7 +174,7 @@ Crafty.c('City', {
 				this.frames++;
 				
 				if (this.frames >= ETA.config.frameRate / this.config.eatSpeed) {
-					this.nbHumans --;
+					//this.nbHumans --;
 					this.gainGuards(1);
 					this.drawLife();
 					this.frames = 0;
