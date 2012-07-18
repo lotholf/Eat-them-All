@@ -28,7 +28,7 @@ ETA.config = {
 			ymax: 520
 		}
 	},
-	
+
 	// Framerate
 	frameRate: FRAMERATE,
 	
@@ -114,7 +114,7 @@ ETA.config = {
 	p1: {
 		startPosition: { x: 150, y: 250, z: 1000 },
 		keyset: "wasd",
-		actionKey: Crafty.keys.SPACE,
+		actionKey: Crafty.keys.SPACE
 	},
 	p2: {
 		startPosition: { x: 800, y: 250, z: 1000 },

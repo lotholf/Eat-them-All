@@ -1,6 +1,6 @@
 Crafty.c('finalTribute', {
 	init:function() {
-		this.requires("2D, DOM, finalTribute, SpriteAnimation");
+		this.requires("2D, DOM, SpriteAnimation");
 	},
 	finalTribute : function(){
 		this.animate("up", [[0,0],[1,0]]);

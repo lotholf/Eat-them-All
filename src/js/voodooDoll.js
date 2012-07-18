@@ -153,7 +153,7 @@ Crafty.c('VoodooDoll', {
 		if (this.id == 1) {
 			this.stop().animate("stand_right", ETA.config.animation.doll.stand, -1);
 		} else {
-			this.stop().animate("stand_left", ETA.config.animation.doll.stand, -1);		
+			this.stop().animate("stand_left", ETA.config.animation.doll.stand, -1);
 		}
 		
 		return this;
@@ -181,7 +181,7 @@ Crafty.c('VoodooDoll', {
 		Crafty.stop(true);
 		Crafty("2D DOM").destroy();
 		Crafty.init(ETA.config.stageWidth, ETA.config.stageHeight, ETA.config.frameRate);
-		Crafty.sprite(16, "img/bgSprite.png", {
+		Crafty.sprite(16, "img/sprites/background.png", {
 			bg: [0, 0,1000 ,550]
 		});
 		ETA.grid = Crafty.e("BGGrid").gridGameOver(this);

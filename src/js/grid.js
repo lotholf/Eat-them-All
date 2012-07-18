@@ -81,10 +81,6 @@ Crafty.c('BGGrid', {
 		Crafty.sprite(289, "img/GameOverScreen_BlueDefeat.png", {
 			blueSpriteDefeat: [0, 0]
 		});
-				
-		Crafty.sprite(220, "img/Title_EatEmAll.png", {
-			endEAT: [0, 0]
-		});
 		
 		Crafty.sprite(285, "img/GameOverScreen_StatsText.png", {
 			statsText: [0, 0]

@@ -33,7 +33,7 @@ Crafty.c('Zombie', {
 	//-----------------------------------------------------------------------------
 	
 	init : function() {
-		this.requires("2D, DOM, SpriteAnimation, zombi, Collision")
+		this.requires("2D, DOM, SpriteAnimation, Collision")
 		
 		if (this.size == 1) {
 			this.collision(new Crafty.polygon([19, 22], [39, 22], [39, 42], [19, 42]));
@@ -294,7 +294,7 @@ Crafty.c('Zombie', {
 			}
 			
 			// Check for collisions with other zombies
-			var collisions = this.hit('zombi');
+			var collisions = this.hit('Zombie');
 			if (collisions) {
 				var nbCollisions = collisions.length;
 				for (var i = 0; i < nbCollisions; i++) {
