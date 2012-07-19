@@ -1,189 +1,178 @@
+
+//-----------------------------------------------------------------------------
+//	Constants
+//-----------------------------------------------------------------------------
+
+// Doll state
+var STANDING = 31;
+var WALKING = 32;
+var SUMMONING = 33;
+
 Crafty.c('VoodooDoll', {
-	init : function() {
-		this.requires("2D, DOM, SpriteAnimation, Collision, Controls")
-		.collision(new Crafty.polygon([6,22], [47,22], [47,65], [6,65]));
-        this._globalZ=8;
-	},
-	walking:"none",
+	
+	//-----------------------------------------------------------------------------
+	//	Attributes
+	//-----------------------------------------------------------------------------
+	
+	state: STANDING,
+	lastDirection: NONE,
 	popSign: 0,
-    id: 0,
-    currentCellId:0,
-    master: null,
-    pillar : null,
-    maxSigns: ETA.config.game.nbSign,
+	id: 0,
+	master: null,
+	pillar: null,
+	defaultDirection: null,
+	maxSigns: ETA.config.game.nbSign,
 	actionKey: Crafty.keys.ENTER,
-	HPLeft: ETA.config.game.hitPointsFortress,
-	statistiques: {"zombiesSpawned" : 0, "guardsKilled" : 0, "CityControled" : 0, "cityDestroyed" : 0},
-    
-    VoodooDoll : function(playerId) {
-			this.id = playerId;
-			// Setup keyboard
-			if (this.id == 1) {
-				this.keyboard1Controls(ETA.config.game.dollSpeed)
-				.attr(ETA.config.p1.startPosition);
-				
-				this.actionKey = ETA.config.p1.actionKey;
-			} else {
-				this.keyboard2Controls(ETA.config.game.dollSpeed)
-				.attr(ETA.config.p2.startPosition);
-				
-				this.actionKey = ETA.config.p2.actionKey;
-			}
-			
-			//Setup animation
-			this.animate("walk_right", [[0,0],[1,0],[0,0],[2,0]])
-			.animate("walk_left", [[3,0],[4,0],[3,0],[5,0]])
-			.animate("walk_up", [[9,0],[10,0],[9,0],[11,0]])
-			.animate("walk_down", [[6,0],[7,0],[6,0],[8,0]])
-			.animate("summon_sign", [[12,0],[13,0],[13,0],[12,0],[0,0]])
-			//Change direction when 
-			.bind("NewDirection", function (direction) {
-				var rate = ETA.config.frameRate/ETA.config.dollAnimationRate;
-				if (!this.isPlaying("summon_sign"))
-				{
-					if (direction.x < 0) {
-						if (!this.isPlaying("walk_left"))
-						{
-							this.stop().animate("walk_left", rate, -1);
-							this.walking = "left"
-						}
-					}
-					if (direction.x > 0) {
-						if (!this.isPlaying("walk_right"))
-						{
-							this.stop().animate("walk_right", rate, -1);
-							this.walking = "right"
-						}
-					}
-					if (direction.y < 0) {
-						if (!this.isPlaying("walk_up"))
-						{
-							this.stop().animate("walk_up", rate, -1);
-							this.walking = "up"
-						}
-					}
-					if (direction.y > 0) {
-						if (!this.isPlaying("walk_down"))
-						{
-							this.stop().animate("walk_down", rate, -1);
-							this.walking = "down"
-						}
-					}
-					if(!direction.x && !direction.y) {
-						this.stop();
-						this.walking = "none"
-					}
-				}
-			})
-			.onHit("gridBounds", function () {
-				//Move unit out of solid tile
-			})
-			.bind('Moved', function(from) {
-				var collide = this.hit('dollGridBounds');
-				if(collide){
-					var collideLength = collide.length;
-					for (var i = 0; i < collideLength; i++) {
-						if (collide[i].type == "SAT")
-						{
-							this.attr({x: from.x, y:from.y});
-						}
-					}
-				}
-				
-				this.currentCellId = ETA.grid.getCell(this._x+29, this._y+48).id;
-				this.z = this.y;
-				
-				if (this.isPlaying("summon_sign"))
-				{
-					this.attr({x: from.x, y:from.y});
-					return;
-				}
-				if (this.walking != "none")
-				{
-					var rate = ETA.config.frameRate/ETA.config.dollAnimationRate;
-					if (this.walking == "left" && !this.isPlaying("walk_left"))
-					{
-						this.stop().animate("walk_left", rate, -1);
-						this.walking = "left"
-					}
-					if (this.walking == "right" && !this.isPlaying("walk_right"))
-					{
-						this.stop().animate("walk_right", rate, -1);
-						this.walking = "right"
-					}
-					if (this.walking == "up" && !this.isPlaying("walk_up"))
-					{
-						this.stop().animate("walk_up", rate, -1);
-						this.walking = "up"
-					}
-					if (this.walking == "down" && !this.isPlaying("walk_down"))
-					{
-						this.stop().animate("walk_down", rate, -1);
-						this.walking = "down"
-					}
-				}
-				
+	HPLeft: ETA.config.game.fortress.hitPoints,
+	statistics: {
+		zombiesSpawned: 0,
+		guardsKilled: 0,
+		citiesControlled: 0,
+		citiesDestroyed: 0
+	},
+	
+	//-----------------------------------------------------------------------------
+	//	Init
+	//-----------------------------------------------------------------------------
+	
+	init : function() {
+		this.requires("2D, DOM, SpriteAnimation, Controls");
+		this._globalZ = 8;
+	},
+	
+	//-----------------------------------------------------------------------------
+	//	Constructor
+	//-----------------------------------------------------------------------------
+	
+	VoodooDoll: function(playerId) {
+		this.id = playerId;
+		this.defaultDirection = (playerId == 1) ? EAST : WEST;
 		
-			})
-			.bind('KeyDown', function(el) {
-				if (el.key !== this.actionKey) {
-					return;
+		// Setup keyboard
+		if (this.id == 1) {
+			this.keyboard1Controls(ETA.config.game.doll.speed)
+				.attr(ETA.config.p1.startPosition);
+			
+			this.actionKey = ETA.config.p1.actionKey;
+		} else {
+			this.keyboard2Controls(ETA.config.game.doll.speed)
+				.attr(ETA.config.p2.startPosition);
+			
+			this.actionKey = ETA.config.p2.actionKey;
+		}
+		
+		//Setup animation
+		this.animate("stand_right", [[0,0],[14,0],[0,0],[15,0]])
+		.animate("stand_left", [[3,0],[16,0],[3,0],[17,0]])
+		.animate("stand_down", [[6,0],[18,0],[6,0],[19,0]])
+		.animate("stand_up", [[9,0],[20,0],[9,0],[21,0]])
+		.animate("walk_right", [[0,0],[1,0],[0,0],[2,0]])
+		.animate("walk_left", [[3,0],[4,0],[3,0],[5,0]])
+		.animate("walk_up", [[9,0],[10,0],[9,0],[11,0]])
+		.animate("walk_down", [[6,0],[7,0],[6,0],[8,0]])
+		.animate("summon_sign", [[12,0],[13,0],[13,0],[12,0],[0,0]])
+		.bind("EnterFrame", function() {
+			if (this.state == SUMMONING && !this.isPlaying("summon_sign")) {
+				this.state = STANDING;
+				this.stop().animate("stand_down", ETA.config.animation.doll.stand, -1);
+			}
+		})
+		.bind("NewDirection", function (direction) {
+			if (this.state != SUMMONING) {
+				if (direction.y != 0) {
+					this.state = WALKING;
+					
+					if (direction.y < 0 && !this.isPlaying("walk_up")) {
+						this.lastDirection = NORTH;
+						this.stop().animate("walk_up", ETA.config.animation.doll.walk, -1);
+					} else if (direction.y > 0 && !this.isPlaying("walk_down")) {
+						this.lastDirection = SOUTH;
+						this.stop().animate("walk_down", ETA.config.animation.doll.walk, -1);
+					}
+				} else if (direction.x != 0) {
+					this.state = WALKING;
+					
+					if (direction.x < 0 && !this.isPlaying("walk_left")) {
+						this.lastDirection = WEST;
+						this.stop().animate("walk_left", ETA.config.animation.doll.walk, -1);
+					} else if (direction.x > 0 && !this.isPlaying("walk_right")) {
+						this.lastDirection = EAST;
+						this.stop().animate("walk_right", ETA.config.animation.doll.walk, -1);
+					}
+				} else if (this.state != STANDING) {
+					this.state = STANDING;
+					
+					switch (this.lastDirection) {
+						case NORTH:
+							this.stop().animate("stand_up", ETA.config.animation.doll.stand, -1);
+							break;
+						case SOUTH:
+							this.stop().animate("stand_down", ETA.config.animation.doll.stand, -1);
+							break;
+						case WEST:
+							this.stop().animate("stand_left", ETA.config.animation.doll.stand, -1);
+							break;
+						case EAST:
+							this.stop().animate("stand_right", ETA.config.animation.doll.stand, -1);
+							break;
+					}
 				}
-				
-				var rate = ETA.config.frameRate/ETA.config.dollAnimationRate;
-				this.stop().animate("summon_sign", rate, 0);
+			}
+		})
+		.bind('Moved', function(from) {
+			this.z = this.y;
+			
+			this.x = Math.min(Math.max(ETA.config.scene.border.xmin, this.x), ETA.config.scene.border.xmax);
+			this.y = Math.min(Math.max(ETA.config.scene.border.ymin, this.y), ETA.config.scene.border.ymax);
+			
+			// Cancel movement when summoning signs
+			if (this.state == SUMMONING) {
+				this.attr({ x: from.x, y: from.y });
+				return;
+			}
+		})
+		.bind('KeyDown', function(el) {
+			if (el.key == this.actionKey) {
+				this.lastDirection = SOUTH;
+				this.state = SUMMONING;
+				this.stop().animate("summon_sign",  ETA.config.animation.doll.summon, 0);
 				this.master.summon();
-				var cell = ETA.grid.getCell(this._x+29, this._y+48);
+				var cell = ETA.grid.getCell(this._x + 29, this._y + 48);
 				
-				if (!cell.elem || cell.elemType == "sign" && cell.elem.player == null) {
+				if (cell.elem == null) {
 					this.drawSign(cell);
-				} else if (cell.elemType == "city" && cell.elem.playerId) {
+				} else if (cell.elem.type == SIGN && this.id == cell.elem.player.id) {
+					cell.elem.rotateSign();
+				} else if (cell.elem.type == CITY && cell.elem.player != null && this.id == cell.elem.player.id) {
 					cell.elem.switchDoorState();
 				}
-			})
+			}
+		});
 		
-		this.currentCellId = ETA.grid.getCell(this._x+29, this._y+48).id;
+		if (this.id == 1) {
+			this.stop().animate("stand_right", ETA.config.animation.doll.stand, -1);
+		} else {
+			this.stop().animate("stand_left", ETA.config.animation.doll.stand, -1);
+		}
 		
 		return this;
 	},
 	
-	inInterval: function(x, y, z) {
-		if(parseInt(y) > parseInt(x-z) && parseInt(y)  < parseInt(x+z) ) {
-			return true;
-		}else{
-			return false;
-		} 
-	},
+	//-----------------------------------------------------------------------------
+	//	Methods
+	//-----------------------------------------------------------------------------
 	
 	drawSign : function(cell) {
-		if(this.id ==1) {
-			var signSprite 	= "signRougeSprite";
-		}else{
-			var signSprite 	= "signBleuSprite";
+		var signSprite = (this.id == 1) ? "redSign" : "blueSign";
+		
+		if (this.popSign < ETA.config.game.doll.maxSigns) {
+			Crafty.e("Sign, " + signSprite).attr({
+				x: cell.center.x - 10,
+				y: cell.center.y - 35,
+				z: cell.center.y - 35,
+				w: 65,
+				h: 65
+			}).sign(this);
 		}
-		
-		if(this.popSign < ETA.config.game.nbSign) {
-			if(cell.attribute('sign')) {
-				Crafty.e("Sign, " + signSprite).attr({
-					x: cell.center.x - 10,
-					y: cell.center.y - 35,
-					z: cell.center.y - 35,
-					w: 65,
-					h: 65
-				}).sign(this);
-			}
-			this.z = this.y;
-		}		
-	},
-	youLose : function(){
-		Crafty.stop(true);
-		Crafty("2D DOM").destroy();
-		Crafty.init(ETA.config.stageWidth, ETA.config.stageHeight, ETA.config.frameRate);
-		Crafty.sprite(16, "img/bgSprite.png", {
-			bg: [0, 0,1000 ,550]
-		});
-		ETA.grid = Crafty.e("BGGrid").gridGameOver(this);
-		gameState = "gameover";
-		
 	}
 });
