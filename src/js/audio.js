@@ -1,10 +1,6 @@
 //audio managment
 Crafty.audio.MAX_CHANNEL=1;
 
-Crafty.audio.add("bgMusic", [
-        "media/ZombieBattleQN.mp3", 
-        "media/ZombieBattleQN.ogg"]);
-
 Crafty.audio.add("signCreate", [
         "media/InvocPoto.mp3", 
         "media/InvocPoto.ogg"]);
@@ -64,27 +60,13 @@ Crafty.audio.add("gameOver", [
 Crafty.audio.add("pauseStart", [
         "media/PauseBaron.mp3", 
         "media/PauseBaron.ogg"]);
-        
-Crafty.audio.add("pause", [
-        "media/LaPause.mp3", 
-        "media/LaPause.ogg"]);
 
 //VOLUME BALANCE
-Crafty.audio.settings("bgMusic",{volume:1.0});
-Crafty.audio.settings("signCreate",{volume:0.30});
-Crafty.audio.settings("signMove",{volume:0.30});
-Crafty.audio.settings("signDelete",{volume:0.30});
-Crafty.audio.settings("doorOpen",{volume:0.50});
-Crafty.audio.settings("doorClose",{volume:0.50});
-Crafty.audio.settings("holeDig",{volume:0.50});
-Crafty.audio.settings("zombieDie",{volume:0.50});
-Crafty.audio.settings("zombieSounds",{volume:0.50});
-Crafty.audio.settings("zombieRage",{volume:0.50});
-Crafty.audio.settings("fortressAttack",{volume:1.0});
-Crafty.audio.settings("soldierDie",{volume:1.0});
-Crafty.audio.settings("cityDie",{volume:1.0});
-Crafty.audio.settings("gameOver",{volume:1.0});
-Crafty.audio.settings("pauseStart",{volume:0.5});
-Crafty.audio.settings("pause",{volume:0.4});
-
+// Set volume in play method
+//Crafty.audio.settings("holeDig",{volume:0.50});
+//Crafty.audio.settings("zombieDie",{volume:0.50});
+//Crafty.audio.settings("zombieSounds",{volume:0.50});
+//Crafty.audio.settings("zombieRage",{volume:0.50});
+//Crafty.audio.settings("fortressAttack",{volume:1.0});
+//Crafty.audio.settings("soldierDie",{volume:1.0});
 // Use Crafty.audio.play(String id, number repeat); to play sounds repeat time (-1 => loop)

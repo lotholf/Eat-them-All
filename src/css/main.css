@@ -1,5 +1,17 @@
 body {
-	background-color: black;
+	background: url('../img/outerBackground.jpg') #000000 center center fixed no-repeat;
+	padding: 0;
+	margin: 0;	
+}
+
+#container {
+	width: 1000px;
+	height: 580px;
+	position: absolute;
+	left: 50%; 
+	top: 50%;
+	margin-top: -290px; /* Half of height */
+	margin-left: -500px; /* Half of width */
 }
 
 /* 1000 x 580 */
@@ -9,8 +21,8 @@ body {
 	left: 50%;
 	width: 1000px;
 	height: 580px;
+	margin-top: -290px;
 	margin-left: -500px;
-	/* margin-top: -290px; */
 }
 
 /* Start menu */
@@ -18,17 +30,7 @@ body {
 	position: absolute;
 	width: 1000px;
 	height: 580px;
-	background-image:url('../img/StartMenu.png');
-}
-
-#rules {
-	float: right;
-	font-family : arial;
-	color:#a17c4a;
-	width :310px;
-	font-size: 12px;
-	margin-top: 360px;
-	margin-right:30px;
+	background-image: url('../img/StartMenu.png');
 }
 
 #menu-button {
@@ -47,7 +49,7 @@ body {
 }
 
 #start-button:hover {
-	background-position:-275px 0px;
+	background-position: -275px 0px;
 }
 
 #option-button {
@@ -59,14 +61,31 @@ body {
 }
 
 /* Pause */
-#pause {
+#pause-screen {
 	position: absolute;
 	width: 1000px;
 	height: 580px;
 	text-align: center;
+	background-color: #000000;
+	opacity: 0.8;
+	filter: alpha(opacity=80); /* For IE8 and earlier */
+	z-index: 2000;
 }
 
-#pause > img {
+#pause-screen img {
 	margin: auto;
-	margin-top: 150px;
+	margin-top: 250px;
+}
+
+/* AUDIO */
+#muter {
+	width: 50px;
+	height: 50px;
+	z-index: 9001;
+}
+#muter.mute {
+	background-image:url('../img/unmute.png');
+}
+#muter.unmute {
+	background-image:url('../img/mute.png');
 }
