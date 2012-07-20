@@ -70,6 +70,7 @@ Crafty.c('City', {
 		this.attr({ x: this.cell.x, y: this.cell.y - 25, z: this.cell.y - 25 });
 		this.drawLife();
 		this.drawText();
+		this.updateSpriteImage();
 		this.bind("EnterFrame", this.procreate);
 		return this;
 	},
@@ -89,9 +90,9 @@ Crafty.c('City', {
 	changePlayer: function(player){
 		this.doorsOpen = false;
 		this.player = player;
-		this.updateSprite();
+		this.updateSpriteImage();
 	},
-	updateSprite: function() {
+	updateSpriteImage: function() {
 		var spriteAnimation;
 		
 		if (this.player == null) {
@@ -105,7 +106,7 @@ Crafty.c('City', {
 		if (this.nbHumans == 0) {
 			spriteAnimation += "Dead";
 		}
-		
+
 		this.stop().animate(spriteAnimation, 10, 1);
 	},
 	drawLife: function() {
@@ -180,7 +181,7 @@ Crafty.c('City', {
 					this.frames = 0;
 				
 					if (this.nbHumans == 0) {
-						this.updateSprite();
+						this.updateSpriteImage();
 						Crafty.audio.play("cityDie", 1, 0.30);
 					}
 				}
